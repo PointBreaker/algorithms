@@ -1,3 +1,4 @@
+from heapq import heappush, heappop
 def get_adj_list(n, edge_list):
     adj_list = [[] for i in range(0,n)] 
     for edge in edge_list:
@@ -38,9 +39,7 @@ def kosaraju(adj_list):
     
     post_with_node = []
     for u, post in enumerate(post_order):
-        post_with_node.append((post, u))
-    
-    post_with_node= sorted(post_with_node, reverse=True)
+        heappush(post_with_node, (-post, u))
     
     visited = set()
     res = []
@@ -53,7 +52,8 @@ def kosaraju(adj_list):
             if v not in visited:
                 dfs(v)
                 
-    for _, u in post_with_node:
+    while len(post_with_node) != 0:
+        _, u = heappop(post_with_node)
         if u not in visited:
             dfs(u)
         if len(s) != 0:
