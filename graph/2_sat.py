@@ -71,23 +71,6 @@ def contains_negation(scc):
                 return True
     return False
 
-def toposort(dag):
-    n = len(dag)
-    visited = [False] * n
-    res = []
-    
-    def dfs(u):
-        visited[u] = True
-        for v in dag[u]:
-            if not visited[v]:
-                dfs(v)
-        res.append(u)
-    
-    for u in range(n):
-        if not visited[u]:
-            dfs(u)
-    return res[::-1]
-
 def build_dag(sccs, adj):
     n = len(sccs)
     dag_adj = [[] for _ in range(n)] 
